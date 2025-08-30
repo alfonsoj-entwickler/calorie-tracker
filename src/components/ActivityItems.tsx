@@ -1,26 +1,9 @@
-import { useMemo, type Dispatch } from "react";
-import type { Activity } from "../types";
-import { categories } from "../data/categories";
-import type { ActivityActions } from "../reducers/activityReducer";
+import { useActivity } from "../hooks/useActitvity";
 
-type ActivityItemsProps = {
-  activities: Activity[];
-  dispatch: Dispatch<ActivityActions>;
-};
+export default function ActivityItems() {
+  const { state, isEmptyActivities, categoryName, dispatch } = useActivity();
+  const { activities } = state;
 
-export default function ActivityItems({
-  activities,
-  dispatch,
-}: ActivityItemsProps) {
-  const categoryName = useMemo(
-    () => (category: Activity["category"]) =>
-      categories.map((cat) => (category === cat.id ? cat.name : "")),
-    [activities]
-  );
-  const isEmptyActivities = useMemo(
-    () => activities.length === 0,
-    [activities]
-  );
   return (
     <>
       <h2 className="text-4xl font-bold text-slate-600 text-center">
