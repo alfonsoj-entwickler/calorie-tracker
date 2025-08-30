@@ -12,11 +12,7 @@ import type {
   ActivityActions,
   ActivityState,
 } from "../reducers/activityReducer";
-
-type FormProps = {
-  dispatch: Dispatch<ActivityActions>;
-  state: ActivityState;
-};
+import { useActivity } from "../hooks/useActitvity";
 
 const initialState: Activity = {
   id: uuidv4(),
@@ -25,12 +21,13 @@ const initialState: Activity = {
   calories: 0,
 };
 
-export default function Form({ dispatch, state }: FormProps) {
+export default function Form() {
   const [activity, setActivity] = useState<Activity>(initialState);
+
+  const { state, dispatch } = useActivity();
 
   useEffect(() => {
     if (state.activeId) {
-      //console.log(state);
       const selectedActivity = state.activities.filter(
         (item) => item.id === state.activeId
       )[0];
